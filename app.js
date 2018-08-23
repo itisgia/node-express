@@ -10,7 +10,8 @@ app.use(function (req , res, next) {
 app.use(express.static('./public')); //express understands we're going to have html,css,js and img, first looking into public folder
 //a way to inclide bootstrap css. node_modules bootstrap isn't in a public folder so have to get around like this
 app.use('/jQuery', express.static(path.join(__dirname, 'node_modules/jquery/dist/jquery.min.js')));
-app.use('/bootstrapStyle', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css/bootstrap.min.css')));//goig to find bootstrapStyle and we can tell where to look.it's a static file. not going to change
+// app.use('/bootstrapStyle', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css/bootstrap.min.css')));//goig to find bootstrapStyle and we can tell where to look.it's a static file. not going to change
+app.use('/bootstrap', express.static(path.join(__dirname, 'node_modules/bootstrap/dist'))); //another way to inclide link
 
 // app.get('/', (req, res) => res.send('Hello World!')); // line for route.
 app.get('/', function (req, res) {
