@@ -1,6 +1,17 @@
 const express = require('express');
 const path = require('path');
+const Twitter = require('twitter');
+const config = require('./config');
 const app = express(); // app is going to use express()
+
+
+var client = new Twitter({
+  consumer_key: config.TConsumerKey,
+  consumer_secret: config.TConsumerKeySecret,
+  access_token_key: config.TAccessToken,
+  access_token_secret: config.TAccessTokenSecret,
+});
+
 
 app.use(function (req , res, next) {
     console.log(`${req.method} request for ${req.url}`);
@@ -22,6 +33,19 @@ app.get('/about', function (req, res) {
     res.sendFile(__dirname + '/public/about.html'); //still need to include page
 })
 // app.listen(3000, () => console.log('Example app listening on port 3000!'));
+//= somethign making a paremeter or wild card
+app.get('/search=:term', function(req, res){
+    var term = req.params.term;
+    var params = {
+        q: term,
+        count: 1
+    }
+    client.get('search/tweets', params, function(err, tweet, twitterRes){
+        if(!err){
+            res.json(tweet);
+        }
+    });
+});
 
 //set port diffrent way
 app.set('port' , (process.env.PORT) || 3000); // 3000 or
